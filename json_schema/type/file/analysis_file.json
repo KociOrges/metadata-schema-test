@@ -1,0 +1,122 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "type": "object",
+    "description": "A file analysis results produced by an analysis pipeline.",
+    "unevaluatedProperties": false,
+    "title": "Analysis file",
+    "name": "analysis_file",
+    "required": [
+        "content"
+    ],
+    "allOf": [
+        {
+            "type": "object",
+            "$ref": "system/document.json",
+            "$comment": "This loads the system needed properties outside the 'content' field. For implementation outside of MorPhiC, please ensure the system properties satisfy your implementation. These properties are not meant for the user to see.",
+            "properties": {
+                "accessions": {
+                    "description": "An accession regarding an analysis file.",
+                    "title": "Analysis file accession",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "isValidIdentifier": {
+                                    "prefix": "insdc.sra"
+                                }
+                            },
+                            {
+                                "isValidIdentifier": {
+                                    "prefix": "ena.embl"
+                                }
+                            },
+                            {
+                                "isValidIdentifier": {
+                                    "prefix": "geo"
+                                }
+                            }
+                        ]
+                    },
+                    "examples": [
+                        "ERR000001",
+                        "SRR111110"
+                    ]
+                },
+                "described_by": {
+                    "pattern": "^.*/type/[0-9]+.[0-9]+.[0-9]+/file/analysis_file$"
+                },
+                "schema_type": {
+                    "const": "analysis_file",
+                    "default": "analysis_file"
+                }
+            }
+        }
+    ],
+    "properties": {
+        "content": {
+            "type": "object",
+            "title": "Content",
+            "required": [
+                "extension",
+                "label"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The name of the file. Please include the file extension in the file name.",
+                    "title": "File name",
+                    "examples": [
+                        "R1.fastq.gz",
+                        "R2.fastq.gz"
+                    ]
+                },
+                "extension": {
+                    "type": "string",
+                    "pattern": "^[^.].*",
+                    "minLength": 1,
+                    "description": "The extension of the file. Please indicate the full file extension including compression extensions.",
+                    "title": "File extension",
+                    "examples": [
+                        "h5",
+                        "mtx"
+                    ]
+                },
+                "genome_assembly_version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Name of the genome assembly used to generate this file. Please use the name as defined in the Genome Reference Consortium (https://www.ncbi.nlm.nih.gov/grc).",
+                    "title": "Genome version",
+                    "enum": [
+                        "GRCh38",
+                        "GRCh37",
+                        "Not applicable"
+                    ],
+                    "examples": [
+                        "GRCh37",
+                        "GRCh38",
+                        "Not applicable"
+                    ]
+                },
+                "genome_patch_version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Patch version of the genome assembly used to generate this file.",
+                    "title": "Patch version",
+                    "examples": [
+                        "p11",
+                        "p14"
+                    ]
+                },
+                "checksum": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "MD5 checksum of the file.",
+                    "title": "Checksum",
+                    "examples": [
+                        "e09a986c2e630130b1849d4bf9a94c06"
+                    ]
+                }
+            }
+        }
+    }
+}

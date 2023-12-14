@@ -1,0 +1,158 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "type": "object",
+    "description": "Information about the differentiated cell line.",
+    "unevaluatedProperties": false,
+    "title": "Differentiated cell line",
+    "name": "differentiated_cell_line",
+    "required": [
+        "content"
+    ],
+    "allOf": [
+        {
+            "type": "object",
+            "$ref": "system/document.json",
+            "$comment": "This loads the system needed properties outside the 'content' field. For implementation outside of MorPhiC, please ensure the system properties satisfy your implementation. These properties are not meant for the user to see.",
+            "properties": {
+                "accessions": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "isValidIdentifier": {
+                                    "prefix": "biosample"
+                                }
+                            },
+                            {
+                                "isValidIdentifier": {
+                                    "prefix": "insdc.sra"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "described_by": {
+                    "pattern": "^.*/type/[0-9]+.[0-9]+.[0-9]+/biomaterial/differentiated_cell_line$"
+                },
+                "schema_type": {
+                    "const": "differentiated_cell_line",
+                    "default": "differentiated_cell_line"
+                }
+            }
+        }
+    ],
+    "properties": {
+        "content": {
+            "type": "object",
+            "title": "Content",
+            "required": [
+                "label",
+                "terminally_differentiated",
+                "timepoint_unit",
+                "timepoint_value"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "format": "regex",
+                    "pattern": "^[a-zA-Z0-9_]*$",
+                    "minLength": 1,
+                    "description": "A unique label for the differentiated cell line.",
+                    "title": "Differentiated cell line label",
+                    "examples": [
+                        "kolf2_2j_knockout_1_trophoblast"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A general description of the differentiated cell line.",
+                    "title": "Differentiated cell line description",
+                    "examples": [
+                        "KOLF2.2J derived knockout cell line, PAX6/STL2 DKO, differentiated into trophoblasts"
+                    ]
+                },
+                "culture_medium": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The solid, liquid, or semi-solid medium used to support growth.",
+                    "title": "Culture medium",
+                    "examples": [
+                        "RPMI 1640 + 2mM Glutamine + 10-20% FBS",
+                        "human placental cord serum"
+                    ]
+                },
+                "terminally_differentiated": {
+                    "type": "string",
+                    "description": "Is the cell line terminally differentiated.",
+                    "title": "Terminally differentiated?",
+                    "enum": [
+                        "yes",
+                        "no",
+                        "unknown"
+                    ],
+                    "examples": [
+                        "no",
+                        "unknown",
+                        "yes"
+                    ]
+                },
+                "model_system": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "To which model system this differentiated cell line has been derived into",
+                    "title": "Model system",
+                    "graphRestriction": {
+                        "ontologies": [
+                            "obo:uberon"
+                        ],
+                        "classes": [
+                            "UBERON:0000465"
+                        ],
+                        "includeSelf": false,
+                        "queryFields": [
+                            "obo_id",
+                            "label"
+                        ]
+                    },
+                    "examples": [
+                        "UBERON:0000006",
+                        "islet of Langerhans"
+                    ]
+                },
+                "timepoint_value": {
+                    "type": "number",
+                    "description": "Value of the timepoint.",
+                    "title": "Timepoint value",
+                    "examples": [
+                        7.5,
+                        8,
+                        9.1
+                    ]
+                },
+                "timepoint_unit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "title": "Timepoint unit",
+                    "graphRestriction": {
+                        "ontologies": [
+                            "obo:uo"
+                        ],
+                        "classes": [
+                            "UO:0000003",
+                            "UO:0000149"
+                        ],
+                        "includeSelf": false,
+                        "queryFields": [
+                            "obo_id",
+                            "label"
+                        ]
+                    },
+                    "examples": [
+                        "UO:0000010",
+                        "second"
+                    ]
+                }
+            }
+        }
+    }
+}

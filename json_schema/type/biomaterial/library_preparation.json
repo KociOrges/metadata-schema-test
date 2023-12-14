@@ -1,0 +1,211 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "type": "object",
+    "description": "Information about the library preparation.",
+    "unevaluatedProperties": false,
+    "title": "Library preparation",
+    "name": "library_preparation",
+    "required": [
+        "content"
+    ],
+    "allOf": [
+        {
+            "type": "object",
+            "$ref": "system/document.json",
+            "$comment": "This loads the system needed properties outside the 'content' field. For implementation outside of MorPhiC, please ensure the system properties satisfy your implementation. These properties are not meant for the user to see.",
+            "properties": {
+                "accessions": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "isValidIdentifier": {
+                                    "prefix": "biosample"
+                                }
+                            },
+                            {
+                                "isValidIdentifier": {
+                                    "prefix": "insdc.sra"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "described_by": {
+                    "pattern": "^.*/type/[0-9]+.[0-9]+.[0-9]+/biomaterial/library_preparation$"
+                },
+                "schema_type": {
+                    "const": "library_preparation",
+                    "default": "library_preparation"
+                }
+            }
+        }
+    ],
+    "properties": {
+        "content": {
+            "type": "object",
+            "title": "Content",
+            "required": [
+                "label"
+            ],
+            "dependentRequired": {
+                "library_concentration_unit": [
+                    "library_concentration_value"
+                ],
+                "library_concentration_value": [
+                    "library_concentration_unit"
+                ],
+                "library_final_yield_unit": [
+                    "library_final_yield_value"
+                ],
+                "library_final_yield_value": [
+                    "library_final_yield_unit"
+                ],
+                "library_input_amount_unit": [
+                    "library_input_amount_value"
+                ],
+                "library_input_amount_value": [
+                    "library_input_amount_unit"
+                ]
+            },
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "format": "regex",
+                    "pattern": "^[a-zA-Z0-9_]*$",
+                    "minLength": 1,
+                    "description": "A unique label for the library preparation.",
+                    "title": "Library preparation label",
+                    "examples": [
+                        "kolf2_2j_knockout_1_trophoblast_library_preparation1S"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A general description of the library preparation.",
+                    "title": "Library preparation description",
+                    "examples": [
+                        "Run 1, batch 1S, library preparation from KOLF2.2J derived trophoblasts"
+                    ]
+                },
+                "average_fragment_size": {
+                    "type": "integer",
+                    "description": "Average fragment size for the transcripts in the library preparation.",
+                    "title": "Average fragment size",
+                    "examples": [
+                        150,
+                        256
+                    ]
+                },
+                "library_input_amount_value": {
+                    "type": "number",
+                    "description": "Value of the library input amount.",
+                    "title": "Library input amount value",
+                    "examples": [
+                        7.5,
+                        8,
+                        9.1
+                    ]
+                },
+                "library_input_amount_unit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unit by which the value of the library input was measured.",
+                    "title": "Library input amount unit",
+                    "graphRestriction": {
+                        "ontologies": [
+                            "obo:uo"
+                        ],
+                        "classes": [
+                            "UO:0000095"
+                        ],
+                        "includeSelf": false,
+                        "queryFields": [
+                            "obo_id",
+                            "label"
+                        ]
+                    },
+                    "examples": [
+                        "UO:0000101",
+                        "UO:0000034"
+                    ]
+                },
+                "library_concentration_value": {
+                    "type": "number",
+                    "description": "Value of the library concentration.",
+                    "title": "Library concentration value",
+                    "examples": [
+                        7.5,
+                        8,
+                        9.1
+                    ]
+                },
+                "library_concentration_unit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unit by which the library concentration was measured.",
+                    "title": "Library concentration unit",
+                    "graphRestriction": {
+                        "ontologies": [
+                            "obo:uo"
+                        ],
+                        "classes": [
+                            "UO:0000052"
+                        ],
+                        "includeSelf": false,
+                        "queryFields": [
+                            "obo_id",
+                            "label"
+                        ]
+                    },
+                    "examples": [
+                        "UO:0000275",
+                        "nanogram per mililiter"
+                    ]
+                },
+                "library_final_yield_value": {
+                    "type": "number",
+                    "description": "Value of the library final yield.",
+                    "title": "Library final yield value",
+                    "examples": [
+                        7.5,
+                        8,
+                        9.1
+                    ]
+                },
+                "library_final_yield_unit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unit by which the final yield of the library preparation was measured.",
+                    "title": "Library final yield unit",
+                    "graphRestriction": {
+                        "ontologies": [
+                            "obo:uo"
+                        ],
+                        "classes": [
+                            "UO:1000021"
+                        ],
+                        "includeSelf": false,
+                        "queryFields": [
+                            "obo_id",
+                            "label"
+                        ]
+                    },
+                    "examples": [
+                        "UO:0000024",
+                        "microliter"
+                    ]
+                },
+                "library_pcr_cycles": {
+                    "type": "integer",
+                    "description": "Number of PCR cycles performed for this library.",
+                    "title": "Library PCR cycles",
+                    "examples": [
+                        150,
+                        256
+                    ]
+                }
+            }
+        }
+    }
+}
