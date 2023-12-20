@@ -6,7 +6,7 @@
         "study": "0.0.1"
       },
       "biomaterial": {
-        "cell_line": "0.0.2",
+        "cell_line": "0.0.1",
         "differentiated_cell_line": "0.0.1",
         "library_preparation": "0.0.1",
         "organoid": "0.0.1"
